@@ -3,27 +3,13 @@
 */
 interface rcc_if;
 
-  bit reset, clk;
-
-  bit rcc_clk;
-
-  logic [3:0] address;
-
-  logic [15:0] din;
-
-  bit digit_clk;
-
-  logic [7:0] dout;
+  bit reset, clk, rcc_clk, digit_clk, test_mode, scan_in0, scan_in1, scan_en, scan_out0, scan_out1;
 
   logic dout_flag;
+  logic [3:0] address;
+  logic [7:0] dout;
+  logic [15:0] din;
 
-  bit test_mode;
-
-  bit scan_in0, scan_in1, scan_en;
-
-  bit scan_out0, scan_out1;
-
-
-endinterface:rcc_if
+endinterface : rcc_if
 
 
