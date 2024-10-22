@@ -1,8 +1,8 @@
 // wall time logic for testbench //
 
-#include<stdio.h>
-#include<time.h>
-#include<svdpi.h>
+#include <stdio.h>
+#include <time.h>
+#include <svdpi.h>
 
 int sim_start_time()
 {
@@ -13,25 +13,23 @@ int sim_start_time()
   return start_time;
 }
 
-
 void start_day_date()
 {
   time_t rawtime;
   struct tm *info;
 
-  time( &rawtime);
+  time(&rawtime);
 
-  info = localtime( &rawtime);
+  info = localtime(&rawtime);
   printf("Current local time and date: %s\n", asctime(info));
 }
-
 
 void digit_gen_time(int n)
 {
   int hour, day, min, sec;
 
-  day = n / (24*3600);
-  n = n % (24*3600);
+  day = n / (24 * 3600);
+  n = n % (24 * 3600);
   hour = n / 3600;
   n = n % 3600;
   min = n / 60;
@@ -39,5 +37,4 @@ void digit_gen_time(int n)
   sec = n;
 
   printf("%0d: %0d: %0d: %0d \n", day, hour, min, sec);
-
 }

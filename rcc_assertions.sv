@@ -1,43 +1,45 @@
-/*
-* Assertion module for the RCC block
-*
-*/
-
-
-module rcc_assertions(rcc_if intf);
+module rcc_assertions (
+    rcc_if intf
+);
 
 
   always begin
     //forever begin
-      @(posedge intf.clk)
-        if(intf.reset == 1)
-           assert (intf.dout == 8'hff)
-           else
-           //$stop;
-           $display("ERROR: dout is not correctly initialized to reset value: %h", intf.dout);
-
-        assert(intf.dout_flag == 1'b1)
+    @(posedge intf.clk)
+      if (intf.reset == 1)
+        assert (intf.dout == 8'hff)
         else
-        $display("%b ERROR: dout_flag is not correctly initialized at reset", intf.dout_flag);
+          //$stop;
+          $display(
+              "ERROR: dout is not correctly initialized to reset value: %h", intf.dout
+          );
+
+    assert (intf.dout_flag == 1'b1)
+    else $display("%b ERROR: dout_flag is not correctly initialized at reset", intf.dout_flag);
 
   end
 
 
-// adding the concurrent assertions
+  // adding the concurrent assertions
 
 
-    property din_rcc_clk;
-      @(posedge intf.clk) 
-        disable iff (intf.reset) $rose(intf.rcc_clk) |=> !$isunknown(intf.din);
-    endproperty
+  property din_rcc_clk;
+    @(posedge intf.clk) disable iff (intf.reset) $rose(
+        intf.rcc_clk
+    ) |=> !$isunknown(
+        intf.din
+    );
+  endproperty
 
-   din_ckeck: assert property (din_rcc_clk) else begin
-              $error("ERROR----------- din is unknown at rcc clock");
-    end
+  din_ckeck :
+  assert property (din_rcc_clk)
+  else begin
+    $error("ERROR----------- din is unknown at rcc clock");
+  end
 
 
-// need to use non-overlapped operator //
-/*    property digclk_doutflag;
+  // need to use non-overlapped operator //
+  /*    property digclk_doutflag;
       @(posedge intf.clk)
         disable iff (intf.reset) $changed(intf.dout_flag) |=> $rose(intf.digit_clk);
       endproperty
@@ -46,4 +48,4 @@ module rcc_assertions(rcc_if intf);
                     $error("ERROR-------------- digit clock %t", $time);
     end*/
 
-endmodule //assertion
+endmodule  //assertion
